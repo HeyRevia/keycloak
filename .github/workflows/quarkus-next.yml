@@ -19,6 +19,7 @@ permissions:
   
 jobs:
   update-quarkus-next-branch:
+    if: github.repository_owner == 'keycloak'
     name: Update quarkus-next branch
     if: github.event_name != 'schedule' || github.repository == 'keycloak/keycloak'
     runs-on: ubuntu-latest
@@ -44,6 +45,7 @@ jobs:
           git push -f origin HEAD:quarkus-next
 
   run-matrix-with-quarkus-next:
+    if: github.repository_owner == 'keycloak'
     name: Run workflow matrix with the quarkus-next branch
     runs-on: ubuntu-latest
     permissions:

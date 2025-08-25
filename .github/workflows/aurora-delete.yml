@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   delete:
+    if: github.repository_owner == 'keycloak'
     name: Delete Aurora DB
     runs-on: ubuntu-latest
     steps:

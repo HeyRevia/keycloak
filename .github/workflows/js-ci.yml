@@ -27,6 +27,7 @@ permissions:
 
 jobs:
   conditional:
+    if: github.repository_owner == 'keycloak'
     name: Check conditional workflows and jobs
     runs-on: ubuntu-latest
     outputs:
@@ -43,6 +44,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build-keycloak:
+    if: github.repository_owner == 'keycloak'
     name: Build Keycloak
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
@@ -64,6 +66,7 @@ jobs:
           path: keycloak-999.0.0-SNAPSHOT.tar.gz
 
   admin-client:
+    if: github.repository_owner == 'keycloak'
     name: Admin Client
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
@@ -82,6 +85,7 @@ jobs:
         working-directory: js
 
   ui-shared:
+    if: github.repository_owner == 'keycloak'
     name: UI Shared
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
@@ -100,6 +104,7 @@ jobs:
         working-directory: js
 
   account-ui:
+    if: github.repository_owner == 'keycloak'
     name: Account UI
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
@@ -118,6 +123,7 @@ jobs:
         working-directory: js
 
   admin-ui:
+    if: github.repository_owner == 'keycloak'
     name: Admin UI
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
@@ -139,6 +145,7 @@ jobs:
         working-directory: js
 
   account-ui-e2e:
+    if: github.repository_owner == 'keycloak'
     name: Account UI E2E
     needs:
       - conditional
@@ -199,6 +206,7 @@ jobs:
           path: ~/server.log
 
   admin-ui-e2e:
+    if: github.repository_owner == 'keycloak'
     name: Admin UI E2E
     needs:
       - conditional
@@ -261,6 +269,7 @@ jobs:
           path: ~/server.log
 
   check:
+    if: github.repository_owner == 'keycloak'
     name: Status Check - Keycloak JavaScript CI
     if: always()
     needs:

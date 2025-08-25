@@ -27,6 +27,7 @@ permissions:
 
 jobs:
   conditional:
+    if: github.repository_owner == 'keycloak'
     name: Check conditional workflows and jobs
     runs-on: ubuntu-latest
     outputs:
@@ -45,6 +46,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   java:
+    if: github.repository_owner == 'keycloak'
     name: CodeQL Java
     needs: conditional
     runs-on: ubuntu-latest
@@ -73,6 +75,7 @@ jobs:
           CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"interpret-results":["--max-paths",0]}}'
 
   javascript:
+    if: github.repository_owner == 'keycloak'
     name: CodeQL JavaScript
     needs: conditional
     runs-on: ubuntu-latest
@@ -100,6 +103,7 @@ jobs:
           CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"interpret-results":["--max-paths",0]}}'
 
   typescript:
+    if: github.repository_owner == 'keycloak'
     name: CodeQL TypeScript
     needs: conditional
     runs-on: ubuntu-latest
@@ -127,6 +131,7 @@ jobs:
           CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"interpret-results":["--max-paths",0]}}'
 
   check:
+    if: github.repository_owner == 'keycloak'
     name: Status Check - CodeQL
     if: always()
     needs:

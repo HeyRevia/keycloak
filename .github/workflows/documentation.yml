@@ -27,6 +27,7 @@ permissions:
 jobs:
 
   conditional:
+    if: github.repository_owner == 'keycloak'
     name: Check conditional workflows and jobs
     runs-on: ubuntu-latest
     outputs:
@@ -43,6 +44,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
+    if: github.repository_owner == 'keycloak'
     name: Build
     if: ${{ needs.conditional.outputs.documentation == 'true' }}
     runs-on: ubuntu-latest
@@ -73,6 +75,7 @@ jobs:
           retention-days: 1
 
   external-links:
+    if: github.repository_owner == 'keycloak'
     name: External links check
     if: ${{ needs.conditional.outputs.documentation == 'true' }}
     runs-on: ubuntu-latest
@@ -95,6 +98,7 @@ jobs:
           ./mvnw install -Dtest=ExternalLinksTest -am -pl docs/documentation/tests -e -Pdocumentation 
 
   check:
+    if: github.repository_owner == 'keycloak'
     name: Status Check - Keycloak Documentation
     if: always()
     needs:

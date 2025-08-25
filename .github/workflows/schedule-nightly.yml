@@ -26,6 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run-default-branch:
+    if: github.repository_owner == 'keycloak'
     name: Run default branch
     runs-on: ubuntu-latest
     permissions:
@@ -49,6 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run-latest-release-branch:
+    if: github.repository_owner == 'keycloak'
     name: Run latest release branch
     needs: setup
     runs-on: ubuntu-latest

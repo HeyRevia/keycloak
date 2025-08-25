@@ -27,6 +27,7 @@ permissions:
 jobs:
 
   conditional:
+    if: github.repository_owner == 'keycloak'
     name: Check conditional workflows and jobs
     runs-on: ubuntu-latest
     outputs:
@@ -44,6 +45,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
+    if: github.repository_owner == 'keycloak'
     name: Build
     # will only build the guides if the general CI doesn't run, which will also build the guides
     if: ${{ needs.conditional.outputs.guides == 'true' && needs.conditional.outputs.ci != 'true' }}
@@ -56,6 +58,7 @@ jobs:
         uses: ./.github/actions/build-keycloak
 
   check:
+    if: github.repository_owner == 'keycloak'
     name: Status Check - Keycloak Guides
     if: always()
     needs:

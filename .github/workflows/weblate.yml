@@ -29,6 +29,7 @@ jobs:
   update-weblate:
     name: Trigger Weblate to pull the latest changes
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'keycloak'
 
     steps:
       # language=bash

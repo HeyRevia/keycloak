@@ -28,6 +28,7 @@ permissions:
 jobs:
 
   conditional:
+    if: github.repository_owner == 'keycloak'
     name: Check conditional workflows and jobs
     runs-on: ubuntu-latest
     outputs:
@@ -73,6 +74,7 @@ jobs:
           echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
 
   build:
+    if: github.repository_owner == 'keycloak'
     name: Build
     if: needs.conditional.outputs.ci == 'true'
     runs-on: ubuntu-latest
@@ -88,6 +90,7 @@ jobs:
         run: git diff --name-only --exit-code -- "**/proto.lock"
 
   unit-tests:
+    if: github.repository_owner == 'keycloak'
     name: Base UT
     runs-on: ubuntu-latest
     needs: build
@@ -121,6 +124,7 @@ jobs:
           job-id: unit-tests
 
   base-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Base IT
     needs: build
     runs-on: ubuntu-latest
@@ -160,6 +164,7 @@ jobs:
           job-id: base-integration-tests-${{ matrix.group }}
 
   adapter-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Adapter IT
     needs: build
     runs-on: ubuntu-latest
@@ -201,6 +206,7 @@ jobs:
           job-id: adapter-integration-tests
 
   adapter-integration-tests-strict-cookies:
+    if: github.repository_owner == 'keycloak'
     name: Adapter IT Strict Cookies
     needs: build
     runs-on: ubuntu-latest
@@ -273,6 +279,7 @@ jobs:
           job-id: quarkus-unit-tests-${{ matrix.os }}
 
   quarkus-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Quarkus IT
     needs: [build, conditional]
     timeout-minutes: 115
@@ -338,6 +345,7 @@ jobs:
           job-id: quarkus-integration-tests-${{ matrix.os }}-${{ matrix.suite }}
 
   jdk-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Java Distribution IT
     needs: build
     timeout-minutes: 100
@@ -396,6 +404,7 @@ jobs:
           job-id: jdk-integration-tests-${{ matrix.os }}-${{ matrix.dist }}-${{ matrix.version }}
 
   login-v1-tests:
+    if: github.repository_owner == 'keycloak'
     name: Login Theme v1 tests
     needs: build
     timeout-minutes: 100
@@ -431,6 +440,7 @@ jobs:
           job-id: jdk-integration-tests-${{ matrix.os }}-${{ matrix.dist }}-${{ matrix.version }}
 
   volatile-sessions-tests:
+    if: github.repository_owner == 'keycloak'
     name: Volatile Sessions IT
     needs: [build, conditional]
     if: needs.conditional.outputs.ci-store == 'true'
@@ -474,6 +484,7 @@ jobs:
           path: .github/scripts/ansible/files
 
   external-infinispan-tests:
+    if: github.repository_owner == 'keycloak'
     name: External Infinispan IT
     needs: [ build, conditional ]
     if: needs.conditional.outputs.ci-store == 'true'
@@ -514,6 +525,7 @@ jobs:
           job-id: remote-infinispan-integration-tests
 
   auroradb-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: AuroraDB IT
     needs: conditional
     if: needs.conditional.outputs.ci-aurora == 'true'
@@ -687,6 +699,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   store-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Store IT
     needs: build
     runs-on: ubuntu-latest
@@ -776,6 +789,7 @@ jobs:
           job-id: store-integration-tests-${{ matrix.db }}
 
   store-model-tests:
+    if: github.repository_owner == 'keycloak'
     name: Store Model Tests
     runs-on: ubuntu-latest
     needs: [build, conditional]
@@ -809,6 +823,7 @@ jobs:
           job-id: store-model-tests
 
   clustering-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Clustering IT
     needs: build
     runs-on: ubuntu-latest
@@ -844,6 +859,7 @@ jobs:
           job-id: clustering-integration-tests
 
   fips-unit-tests:
+    if: github.repository_owner == 'keycloak'
     name: FIPS UT
     runs-on: ubuntu-latest
     needs: build
@@ -875,6 +891,7 @@ jobs:
           job-id: fips-unit-tests
 
   fips-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: FIPS IT
     needs: build
     runs-on: ubuntu-latest
@@ -919,6 +936,7 @@ jobs:
           job-id: fips-integration-tests-${{ matrix.mode }}
 
   forms-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Forms IT
     runs-on: ubuntu-latest
     needs: build
@@ -961,6 +979,7 @@ jobs:
           job-id: forms-integration-tests-${{ matrix.browser }}
 
   webauthn-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: WebAuthn IT
     if: needs.conditional.outputs.ci-webauthn == 'true'
     runs-on: ubuntu-latest
@@ -1006,6 +1025,7 @@ jobs:
           job-id: webauthn-integration-tests-${{ matrix.browser }}
 
   sssd-unit-tests:
+    if: github.repository_owner == 'keycloak'
     name: SSSD
     runs-on: ubuntu-latest
     if: needs.conditional.outputs.ci-sssd == 'true'
@@ -1043,6 +1063,7 @@ jobs:
           job-id: sssd-unit-tests
 
   migration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Migration Tests
     runs-on: ubuntu-latest
     needs: build
@@ -1090,6 +1111,7 @@ jobs:
           job-id: migration-tests-${{ matrix.old-version }}-${{ matrix.database }}
 
   test-framework:
+    if: github.repository_owner == 'keycloak'
     name: Test Framework
     runs-on: ubuntu-latest
     needs: build
@@ -1105,6 +1127,7 @@ jobs:
         run: ./mvnw package -f test-framework/pom.xml
 
   base-new-integration-tests:
+    if: github.repository_owner == 'keycloak'
     name: Base IT (new)
     runs-on: ubuntu-latest
     needs:
@@ -1126,6 +1149,7 @@ jobs:
         run: ./mvnw package -f tests/pom.xml
 
   mixed-cluster-compatibility-tests:
+    if: github.repository_owner == 'keycloak'
     name: Cluster Compatibility Tests
     if: needs.conditional.outputs.ci-compatibility-matrix != ''
     runs-on: ubuntu-latest
@@ -1156,6 +1180,7 @@ jobs:
           KC_TEST_SERVER_IMAGES: "quay.io/keycloak/keycloak:${{ matrix.version }},-"
 
   check:
+    if: github.repository_owner == 'keycloak'
     name: Status Check - Keycloak CI
     if: always()
     needs:
